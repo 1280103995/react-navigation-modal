@@ -16,13 +16,20 @@ export const AppNavigator = () => {
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
     >
+      {/* App Tab */}
       <Stack.Screen name={'MainTab'} component={MainTabStack}/>
+
+      {/* App Screens */}
       <Stack.Screen name={'Modals'} component={ModalsScreen}/>
+      {/* //Other Screens ... */}
+
+      {/* Modals */}
       {Object.entries({
         ...ModalStack,
       }).map(([name, component]) => (
         <Stack.Screen key={name} name={name} component={component}/>
       ))}
+
     </Stack.Navigator>
   );
 };
