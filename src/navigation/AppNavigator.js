@@ -1,8 +1,7 @@
 import React from 'react';
-import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {ModalStack} from './ModalStack';
-import {MainTabStack} from './MainTabStack';
-import {ModalsScreen} from '../ModalsScreen';
+import {ScreenStack} from './ScreenStack';
 
 const Stack = createStackNavigator();
 
@@ -11,17 +10,11 @@ export const AppNavigator = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        gestureEnabled: true,
-        gestureDirection: 'horizontal',
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        gestureEnabled: false,
       }}
     >
-      {/* App Tab */}
-      <Stack.Screen name={'MainTab'} component={MainTabStack}/>
-
       {/* App Screens */}
-      <Stack.Screen name={'Modals'} component={ModalsScreen}/>
-      {/* //Other Screens ... */}
+      <Stack.Screen name={'Screens'} component={ScreenStack}/>
 
       {/* Modals */}
       {Object.entries({

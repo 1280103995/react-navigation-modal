@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {View, TouchableWithoutFeedback, StyleSheet, Dimensions, BackHandler} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import PropTypes from 'prop-types';
@@ -40,7 +40,7 @@ const Modal = ({animation, position, cancelable, opacity, style, children}) => {
   }
 
   const navigation = useNavigation();
-  useEffect(() => {
+  useLayoutEffect(() => {
     const modalOptions = {
       cardStyle: {backgroundColor: 'transparent'},
       cardOverlayEnabled: true,

@@ -8,6 +8,10 @@ const Tab = createBottomTabNavigator();
 export const MainTabStack = () => {
   return (
     <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: false,
+      }}
       tabBarOptions={{
         labelStyle: {
           fontSize: 18
