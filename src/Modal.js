@@ -3,6 +3,7 @@ import {View, TouchableWithoutFeedback, StyleSheet, Dimensions, BackHandler} fro
 import {useNavigation} from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import {useFocusEffect} from '@react-navigation/core';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const deviceHeight = Dimensions.get('screen').height;
 
@@ -86,13 +87,15 @@ const Modal = ({animation, position, cancelable, opacity, style, children}) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => cancelable ? navigation.goBack() : false}>
-      <View style={[styles.container, childPosition]}>
-        <View onStartShouldSetResponder={() => true} style={style}>
-          {children}
+    <SafeAreaView style={{flex:1}}>
+      <TouchableWithoutFeedback onPress={() => cancelable ? navigation.goBack() : false}>
+        <View style={[styles.container, childPosition]}>
+          <View onStartShouldSetResponder={() => true} style={style}>
+            {children}
+          </View>
         </View>
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 };
 
