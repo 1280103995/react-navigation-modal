@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   BackHandler,
-  Animated
+  Animated,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import PropTypes from 'prop-types';
@@ -75,7 +75,7 @@ const Modal = ({animation, position, cancelable, opacity, style, children, confi
           }),
         },
       }),
-      ...config
+      ...config,
     };
 
     navigation.setOptions(modalOptions);
@@ -88,7 +88,7 @@ const Modal = ({animation, position, cancelable, opacity, style, children, confi
         BackHandler.addEventListener('hardwareBackPress', onBackPress);
         return () =>
           BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-      }, [])
+      }, []),
     );
   }
 
@@ -104,7 +104,7 @@ const Modal = ({animation, position, cancelable, opacity, style, children, confi
       <TouchableWithoutFeedback onPress={() => cancelable ? navigation.goBack() : false}>
         <View style={styles.container}/>
       </TouchableWithoutFeedback>
-      <View style={[{position:'absolute', right:0,left:0,top:0,bottom:0}, childPosition]}>
+      <View pointerEvents="box-none" style={[styles.contentView, childPosition]}>
         <Animated.View style={style}>
           {children}
         </Animated.View>
@@ -132,5 +132,12 @@ export default Modal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  contentView: {
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    top: 0,
+    bottom: 0,
   },
 });
