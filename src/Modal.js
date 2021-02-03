@@ -1,5 +1,12 @@
 import React, {useLayoutEffect} from 'react';
-import {View, TouchableWithoutFeedback, StyleSheet, Dimensions, BackHandler} from 'react-native';
+import {
+  View,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  Dimensions,
+  BackHandler,
+  Animated
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import {useFocusEffect} from '@react-navigation/core';
@@ -7,7 +14,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 const deviceHeight = Dimensions.get('screen').height;
 
-const Modal = ({animation, position, cancelable, opacity, style, children}) => {
+const Modal = ({animation, position, cancelable, opacity, style, children, config}) => {
 
   let transformType, animationObject;
   switch (animation) {
@@ -43,12 +50,17 @@ const Modal = ({animation, position, cancelable, opacity, style, children}) => {
   const navigation = useNavigation();
   useLayoutEffect(() => {
     const modalOptions = {
+      mode: 'modal',
       cardStyle: {backgroundColor: 'transparent'},
       cardOverlayEnabled: true,
       headerShown: false,
       gestureEnabled: false,
       cardStyleInterpolator: ({current: {progress}}) => ({
         cardStyle: {
+          opacity: progress.interpolate({
+            inputRange: [0, 0.5, 0.7, 1],
+            outputRange: [0, 0.25, 0.7, 1],
+          }),
           transform: [
             {
               [transformType]: progress.interpolate(animationObject),
@@ -63,6 +75,7 @@ const Modal = ({animation, position, cancelable, opacity, style, children}) => {
           }),
         },
       }),
+      ...config
     };
 
     navigation.setOptions(modalOptions);
@@ -87,14 +100,15 @@ const Modal = ({animation, position, cancelable, opacity, style, children}) => {
   }
 
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={() => cancelable ? navigation.goBack() : false}>
-        <View style={[styles.container, childPosition]}>
-          <View onStartShouldSetResponder={() => true} style={style}>
-            {children}
-          </View>
-        </View>
+        <View style={styles.container}/>
       </TouchableWithoutFeedback>
+      <View style={[{position:'absolute', right:0,left:0,top:0,bottom:0}, childPosition]}>
+        <Animated.View style={style}>
+          {children}
+        </Animated.View>
+      </View>
     </SafeAreaView>
   );
 };
