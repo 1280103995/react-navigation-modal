@@ -11,7 +11,7 @@ import Modal from './Modal';
 
 export const TopModal = () => {
   return (
-    <Modal position={'Top'} animation={'Up'} style={styles.content}>
+    <Modal position={'top'} animation={'up'} style={styles.content}>
       <Text>Hello</Text>
     </Modal>
   );
@@ -47,8 +47,8 @@ export const BottomModal = () => {
   return (
     <Modal
       opacity={0}
-      position={'Bottom'}
-      animation={'Down'}
+      position={'bottom'}
+      animation={'down'}
       style={styles.content}>
       <Text>Hello</Text>
     </Modal>

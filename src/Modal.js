@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {Fragment, useLayoutEffect} from 'react';
 import {
   View,
   TouchableWithoutFeedback,
@@ -18,7 +18,7 @@ const Modal = ({animation, position, cancelable, opacity, style, children, confi
 
   let transformType, animationObject;
   switch (animation) {
-    case 'Up': {
+    case 'up': {
       transformType = 'translateY';
       animationObject = {
         inputRange: [0, 1],
@@ -27,7 +27,7 @@ const Modal = ({animation, position, cancelable, opacity, style, children, confi
       };
       break;
     }
-    case 'Down': {
+    case 'down': {
       transformType = 'translateY';
       animationObject = {
         inputRange: [0, 1],
@@ -93,23 +93,26 @@ const Modal = ({animation, position, cancelable, opacity, style, children, confi
   }
 
   let childPosition = {justifyContent: 'center'};
-  if (position === 'Top') {
+  if (position === 'top') {
     childPosition = {justifyContent: 'flex-start'};
-  } else if (position === 'Bottom') {
+  } else if (position === 'bottom') {
     childPosition = {justifyContent: 'flex-end'};
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Fragment>
       <TouchableWithoutFeedback onPress={() => cancelable ? navigation.goBack() : false}>
         <View style={styles.container}/>
       </TouchableWithoutFeedback>
-      <View pointerEvents="box-none" style={[styles.contentView, childPosition]}>
+      <SafeAreaView
+        edges={['right', 'top', 'left']}
+        pointerEvents="box-none"
+        style={[styles.contentView, childPosition]}>
         <Animated.View style={style}>
           {children}
         </Animated.View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Fragment>
   );
 };
 
@@ -117,14 +120,14 @@ Modal.propsType = {
   children: React.Children,
   cancelable: PropTypes.bool,
   opacity: PropTypes.number,
-  position: PropTypes.oneOf(['Top', 'Center', 'Bottom']),
-  animation: PropTypes.oneOf(['Up', 'Down']),
+  position: PropTypes.oneOf(['top', 'center', 'bottom']),
+  animation: PropTypes.oneOf(['up', 'down']),
 };
 
 Modal.defaultProps = {
   cancelable: true,
   opacity: 0.5,
-  position: 'Center',
+  position: 'center',
 };
 
 export default Modal;

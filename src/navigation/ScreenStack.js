@@ -16,7 +16,7 @@ export const ScreenStack = () => {
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}
     >
-      <Stack.Screen name={'Flash'} component={FlashScreen}/>
+      {/*<Stack.Screen name={'Flash'} component={FlashScreen}/>*/}
       <Stack.Screen name={'MainTab'} component={MainTabStack}/>
       <Stack.Screen name={'Modals'} component={ModalsScreen}/>
 
