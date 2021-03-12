@@ -6,12 +6,14 @@ import {
   Dimensions,
   BackHandler,
   Animated,
+  NativeModules
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import {useFocusEffect} from '@react-navigation/core';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+const AndroidStatusBarModule = NativeModules.AndroidStatusBarModule;
 const deviceHeight = Dimensions.get('screen').height;
 
 const Modal = ({animation, position, cancelable, opacity, style, children, config}) => {
@@ -49,6 +51,7 @@ const Modal = ({animation, position, cancelable, opacity, style, children, confi
 
   const navigation = useNavigation();
   useLayoutEffect(() => {
+    Platform.OS === 'android' && AndroidStatusBarModule.setTranslucent(true);
     const modalOptions = {
       mode: 'modal',
       cardStyle: {backgroundColor: 'transparent'},
